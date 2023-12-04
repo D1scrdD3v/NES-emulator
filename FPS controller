@@ -1,0 +1,29 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 5.0f;
+    public Transform cameraTransform;
+    
+    private CharacterController characterController;
+    
+    void Start()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
+    
+    void Update()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        
+        Vector3 moveDirection = transform.right * horizontalInput + transform.forward * verticalInput;
+        characterController.Move(moveDirection * speed * Time.deltaTime);
+        
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+        
+        transform.Rotate(Vector3.up * mouseX);
+        cameraTransform.Rotate(Vector3.left * mouseY);
+    }
+}
