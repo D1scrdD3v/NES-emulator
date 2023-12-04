@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class WeaponController : MonoBehaviour
+{
+    public GameObject[] weapons;
+    private int currentWeaponIndex = 0;
+    
+    void Start()
+    {
+        SetupWeapon(currentWeaponIndex);
+    }
+
+    void Update()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)   // scrolling up
+        {
+            CycleWeapon(1);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)   // scrolling down
+        {
+            CycleWeapon(-1);
+        }
+    }
+
+    void CycleWeapon(int increment)
+    {
+        weapons[currentWeaponIndex].SetActive(false);
+        currentWeaponIndex = (currentWeaponIndex + increment + weapons.Length) % weapons.Length;
+        SetupWeapon(currentWeaponIndex);
+    }
+    
+    void SetupWeapon(int index)
+    {
+        weapons[index].SetActive(true);
+    }
+}
